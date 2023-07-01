@@ -1,7 +1,10 @@
 const express = require("express");
+const fs = require('fs')
 const path = require('path')
 const app = express()
-const data = require('./db/db.json');
+const data = require('./db/db');
+const { log } = require("console");
+
 
 // app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
@@ -21,14 +24,20 @@ app.get('/api/notes', (req, res) => res.json(data));
 
 
 
+
+function saveToNotefile(arrayObject) {
+    data.push(...arrayObject)
+    const newNoteFile = JSON.stringify(data)
+    fs.writeFileSync('./db/db.json', newNoteFile)
+    return;
+}
+
 //Post db/db.json
 
 app.post('/api/notes', (req, res) => {
-    console.info(`${req.method} request received to add a review`)
+    console.info(`${req.method} request received to add a note`)
     const { title, text } = req.body;
-    // If all the required properties are present
     if (title && text) {
-        // Variable for the object we will save
         const newNote = {
             title,
             text,
@@ -38,18 +47,20 @@ app.post('/api/notes', (req, res) => {
             status: 'success',
             body: newNote,
         };
-
-        console.log(response);
-        res.status(201).json(response);
+        saveToNotefile([newNote])
+        // console.log(response);
+        // res.status(201).json(response);
     } else {
-        res.status(500).json('Error in posting review');
+        res.status(500).json('Error in posting note');
     }
 })
 
 
 
-
-
+testNote = [{
+    title: "New Note Title",
+    text: "new important note"
+}]
 
 
 
