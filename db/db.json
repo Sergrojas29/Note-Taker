@@ -1,6 +1,14 @@
 [
     {
-        "title": "Test Title",
-        "text": "Test text"
+        "title": "More Notes",
+        "text": "Hello More notes"
+    },
+    {
+        "title": "Test New",
+        "text": "MOORRRe"
+    },
+    {
+        "title": "Delete",
+        "text": "DeleteThis"
     }
 ]

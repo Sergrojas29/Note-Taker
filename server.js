@@ -32,6 +32,12 @@ function saveToNotefile(arrayObject) {
     return;
 }
 
+function deleteFromNoteFile(arrayObject){
+    const newNoteFile = JSON.stringify(arrayObject)
+    fs.writeFileSync('./db/db.json', newNoteFile)
+    return;
+}
+
 //Post db/db.json
 
 app.post('/api/notes', (req, res) => {
@@ -48,22 +54,21 @@ app.post('/api/notes', (req, res) => {
             body: newNote,
         };
         saveToNotefile([newNote])
-        // console.log(response);
-        // res.status(201).json(response);
+        console.log(response);
+        res.status(201).json(response);
     } else {
         res.status(500).json('Error in posting note');
     }
 })
 
-
-
-testNote = [{
-    title: "New Note Title",
-    text: "new important note"
-}]
-
-
-
-
+app.delete('/api/notes/:title.:text', (req,res)=> {
+    const {title,text} = req.params
+    console.info(`${req.method} request received to add a note`)
+    const newdata = data.filter(e => {
+            return e.title == title && e.text == text ?  false: true        
+    })
+    deleteFromNoteFile(newdata)
+    res.status(201).json(newdata)
+})
 
 app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`))
