@@ -32,9 +32,10 @@ function saveToNotefile(arrayObject) {
 }
 
 function deleteFromNoteFile(arrayObject){
-    const newNoteFile = JSON.stringify(arrayObject)
-    fs.writeFileSync('./db/db.json', newNoteFile)
-    return;
+    return new Promise((resolve, reject) =>{
+        const newNoteFile = JSON.stringify(arrayObject)
+        fs.writeFileSync('./db/db.json', newNoteFile)
+    });
 }
 
 //Post db/db.json
@@ -68,8 +69,9 @@ app.delete('/api/notes/:id', (req,res)=> {
     const newdata = data.filter(e => {
             return e.id == id ?  false: true        
     })
-    deleteFromNoteFile(newdata)
-    res.status(201).json(newdata)
+    deleteFromNoteFile(newdata).then(()=>{
+        res.status(201).json(newdata)
+    })
     // res.status(201).send("Deleted successfully")
 })
 
