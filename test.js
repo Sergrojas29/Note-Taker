@@ -1,45 +1,42 @@
-const data = require('./db/db.json')
-const fs = require('fs')
+function makeRequest(location) {
+    return new Promise((resolve, reject) => {
+        console.log(`Make Request to ${location}`);
 
-const testObject = [
-  {
-    title: "Test Title",
-    text: "Test text"
-  },
-  {
-    title: "New Title",
-    text: "New Text"
-  },
-  {
-    title: "New Note",
-    text: "To take note"
-  },
-  {
-    title: "More Notes",
-    text: "Hello More notes"
-  },
-  {
-    title: "Test New",
-    text: "MOORRRe"
-  }
-]
-
-
-function deleteFromNoteFile(arrayObject){
-    const newNoteFile = JSON.stringify(arrayObject)
-    fs.writeFileSync('./db/test.json', newNoteFile)
-    return;
+        location === 'Google' ?
+            resolve('Google Says hi') :
+            reject('We can only talk to Google')
+    })
 }
 
-deleteFromNoteFile(testObject)
+function processRequest(response) {
+    return new Promise((resolve, reject) => {
+        console.log('Processing Response');
+        resolve(`Extra info + ${response}`)
+    })
+}
 
-// const testdata = {"title":"New Note","text":"To take note"}
 
-// const newdata = data.filter(e => checkForInObject(e, testdata))
+// makeRequest('Google').then(response => {
+//     console.log('Response Received')
+//     return processRequest(response)
+// }).then(processResonse => {
+//     console.log(processResonse)
+// }).catch(err => {
+//     console.log(err);
+// })
 
 
-// function checkForInObject(object, resObject){
-//     const {title, text} = resObject
-//     return object.title == title && object.text == text ?  false: true
-// }
+async function dowork(){
+    try{
+        const response = await makeRequest('Google');
+        console.log('Response Recieved');
+        const processResponse = await processRequest(response)
+        console.log(processResponse);
+             
+    } catch (err) {
+        console.log(err);
+    }
+}
 
+
+dowork()

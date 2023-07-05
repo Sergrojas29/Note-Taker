@@ -4,7 +4,8 @@ const path = require('path')
 const app = express()
 const data = require('./db/db');
 const { log } = require("console");
-
+const uuid = require('uuid')
+// import { v4 as uuidv4} from 'uuid';
 
 // app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
@@ -22,9 +23,7 @@ app.get('/notes', (req, res) => { res.sendFile(path.join(__dirname, 'public/note
 //Get db/db.json
 app.get('/api/notes', (req, res) => res.json(data));
 
-
-
-
+//Get Original Notes and add new obejct to it
 function saveToNotefile(arrayObject) {
     data.push(...arrayObject)
     const newNoteFile = JSON.stringify(data)
@@ -43,10 +42,12 @@ function deleteFromNoteFile(arrayObject){
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`)
     const { title, text } = req.body;
+    const id = uuid.v4() 
     if (title && text) {
         const newNote = {
             title,
             text,
+            id,
         };
 
         const response = {
@@ -61,14 +62,21 @@ app.post('/api/notes', (req, res) => {
     }
 })
 
-app.delete('/api/notes/:title.:text', (req,res)=> {
-    const {title,text} = req.params
+app.delete('/api/notes/:id', (req,res)=> {
+    const {id} = req.params
     console.info(`${req.method} request received to add a note`)
     const newdata = data.filter(e => {
-            return e.title == title && e.text == text ?  false: true        
+            return e.id == id ?  false: true        
     })
     deleteFromNoteFile(newdata)
     res.status(201).json(newdata)
+    // res.status(201).send("Deleted successfully")
 })
 
-app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`))
+
+
+
+app.listen(PORT, (err) =>{
+    err ? console.log(err) :
+    console.log(`Example app listening at http://localhost:${PORT}`)
+})
