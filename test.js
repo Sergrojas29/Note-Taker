@@ -1,42 +1,28 @@
-function makeRequest(location) {
-    return new Promise((resolve, reject) => {
-        console.log(`Make Request to ${location}`);
-
-        location === 'Google' ?
-            resolve('Google Says hi') :
-            reject('We can only talk to Google')
-    })
-}
-
-function processRequest(response) {
-    return new Promise((resolve, reject) => {
-        console.log('Processing Response');
-        resolve(`Extra info + ${response}`)
-    })
-}
-
-
-// makeRequest('Google').then(response => {
-//     console.log('Response Received')
-//     return processRequest(response)
-// }).then(processResonse => {
-//     console.log(processResonse)
-// }).catch(err => {
-//     console.log(err);
+//   const getNotes = () =>
+//     fetch('/api/notes', {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+  
+// fetch('http://www.boredapi.com/api/activity/').then(
+//     function(res) {
+//     return console.log(res.json())
 // })
 
+// async function getSomething() {
+//     response = await fetch('http://127.0.0.1:3000/api/notes')
+//     data = await response.json()
+//     console.log(data);
+// }
+// getSomething()
 
-async function dowork(){
-    try{
-        const response = await makeRequest('Google');
-        console.log('Response Recieved');
-        const processResponse = await processRequest(response)
-        console.log(processResponse);
-             
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-
-dowork()
+fetch('http://192.168.1.178:3000/api/notes')
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function(data){
+    console.log(data);
+  }
+  )

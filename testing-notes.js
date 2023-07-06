@@ -36,32 +36,75 @@
 //   }
 //   )
 
-const posts = [{ title: "post One", body: "this is post one" }, { title: "post Two", body: "this is post two" }];
+// const posts = [{ title: "post One", body: "this is post one" }, { title: "post Two", body: "this is post two" }];
 
-function getPosts() {
-  setTimeout(() => {
-    let output = ''
-    posts.forEach((post, index) => {
-      output += `<li>${post.title}: ${post.body}</li>`;
-    })
-    document.body.innerHTML = output
-  }, 1000);
-}
+// function getPosts() {
+//   setTimeout(() => {
+//     let output = ''
+//     posts.forEach((post, index) => {
+//       output += `<li>${post.title}: ${post.body}</li>`;
+//     })
+//     document.body.innerHTML = output
+//   }, 1000);
+// }
 
-function createPost(post) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      posts.push(post);
-      const error = true
-      !error ? resolve() : reject('error: Something went wrong')
-    }, 2000);
+// function createPost(post) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       posts.push(post);
+//       const error = true
+//       !error ? resolve() : reject('error: Something went wrong')
+//     }, 2000);
 
-  })
+//   })
 
-}
+// }
 
 
-createPost({ title: 'Post Three', body: 'this is post three' }).then(getPosts).catch(err => console.log(err))
+// createPost({ title: 'Post Three', body: 'this is post three' }).then(getPosts).catch(err => console.log(err))
 
 
 // getPosts()
+
+function makeRequest(location) {
+  return new Promise((resolve, reject) => {
+      console.log(`Make Request to ${location}`);
+
+      location === 'Google' ?
+          resolve('Google Says hi') :
+          reject('We can only talk to Google')
+  })
+}
+
+function processRequest(response) {
+  return new Promise((resolve, reject) => {
+      console.log('Processing Response');
+      resolve(`Extra info + ${response}`)
+  })
+}
+
+
+// makeRequest('Google').then(response => {
+//     console.log('Response Received')
+//     return processRequest(response)
+// }).then(processResonse => {
+//     console.log(processResonse)
+// }).catch(err => {
+//     console.log(err);
+// })
+
+
+async function dowork(){
+  try{
+      const response = await makeRequest('Google');
+      console.log('Response Recieved');
+      const processResponse = await processRequest(response)
+      console.log(processResponse);
+           
+  } catch (err) {
+      console.log(err);
+  }
+}
+
+
+dowork()

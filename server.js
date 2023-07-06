@@ -2,15 +2,20 @@ const express = require("express");
 const fs = require('fs')
 const path = require('path')
 const app = express()
-const data = require('./db/db');
+let data = require('./db/db');
 const { log } = require("console");
 const uuid = require('uuid')
 // import { v4 as uuidv4} from 'uuid';
 
-// app.use(express.static(path.join(__dirname, 'public')))
+
+//!
+const fileData = () => {return JSON.parse(fs.readFileSync('./db/db.json','utf8'))}
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+//* app.use(express.static(path.join(__dirname, 'public')))
 
 const PORT = 3000
 
@@ -21,7 +26,7 @@ app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'public/index.htm
 app.get('/notes', (req, res) => { res.sendFile(path.join(__dirname, 'public/notes.html')) })
 
 //Get db/db.json
-app.get('/api/notes', (req, res) => res.json(data));
+app.get('/api/notes', (req, res) => res.json(fileData()));
 
 //Get Original Notes and add new obejct to it
 function saveToNotefile(arrayObject) {
@@ -31,11 +36,12 @@ function saveToNotefile(arrayObject) {
     return;
 }
 
-function deleteFromNoteFile(arrayObject){
-    return new Promise((resolve, reject) =>{
+function deleteFromNoteFile(arrayObject) {
+    return new Promise((resolve, reject) => {
         const newNoteFile = JSON.stringify(arrayObject)
         fs.writeFileSync('./db/db.json', newNoteFile)
-    });
+        resolve()
+});
 }
 
 //Post db/db.json
@@ -43,7 +49,7 @@ function deleteFromNoteFile(arrayObject){
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`)
     const { title, text } = req.body;
-    const id = uuid.v4() 
+    const id = uuid.v4()
     if (title && text) {
         const newNote = {
             title,
@@ -63,22 +69,23 @@ app.post('/api/notes', (req, res) => {
     }
 })
 
-app.delete('/api/notes/:id', (req,res)=> {
-    const {id} = req.params
+app.delete('/api/notes/:id', (req, res) => {
+    const { id } = req.params
     console.info(`${req.method} request received to add a note`)
     const newdata = data.filter(e => {
-            return e.id == id ?  false: true        
+        return e.id == id ? false : true
     })
     deleteFromNoteFile(newdata).then(()=>{
         res.status(201).json(newdata)
     })
+
     // res.status(201).send("Deleted successfully")
 })
 
 
 
 
-app.listen(PORT, (err) =>{
+app.listen(PORT, (err) => {
     err ? console.log(err) :
-    console.log(`Example app listening at http://localhost:${PORT}`)
+        console.log(`Example app listening at http://localhost:${PORT}`)
 })
