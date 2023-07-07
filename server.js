@@ -9,7 +9,7 @@ const uuid = require('uuid')
 
 
 //!
-const fileData = () => {return JSON.parse(fs.readFileSync('./db/db.json','utf8'))}
+let fileData = () => {return JSON.parse(fs.readFileSync('./db/db.json','utf8'))}
 
 
 app.use(express.json());
@@ -26,7 +26,7 @@ app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'public/index.htm
 app.get('/notes', (req, res) => { res.sendFile(path.join(__dirname, 'public/notes.html')) })
 
 //Get db/db.json
-app.get('/api/notes', (req, res) => res.json(fileData()));
+app.get('/api/notes', (req, res) => res.json(data));
 
 //Get Original Notes and add new obejct to it
 function saveToNotefile(arrayObject) {
@@ -72,11 +72,11 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     const { id } = req.params
     console.info(`${req.method} request received to add a note`)
-    const newdata = data.filter(e => {
+    data = data.filter(e => {
         return e.id == id ? false : true
     })
-    deleteFromNoteFile(newdata).then(()=>{
-        res.status(201).json(newdata)
+    deleteFromNoteFile(data).then(()=>{
+        res.status(201).json(data)
     })
 
     // res.status(201).send("Deleted successfully")
