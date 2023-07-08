@@ -1,37 +1,71 @@
 # Note-Taker
+Application deployed with Node.js and Heroku. The application can acces, save and delete notes using a JSON file. 
+
 Application that is used to write and save notes. Through Express.js back end and will save and retrieve note data from a JSON file. 
 
+https://danotetaker-eda88a1c37c6.herokuapp.com/
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+
+
+## Table of Contents
+
+1. [Authors](#authors)
+
+2. [Usage/Examples](#usageexamples)    
+    
+3. [Demo](#demo)    
+
+4. [Contributing](#contributing)
+
+5. [License](#license)
+
+## Authors
+
+[@Sergrojas29](https://www.github.com/Sergrojas29)
+
+
+    
+## Usage/Examples
+
+Landing Page
+![alt landing-page](./readmefiles/LandingPage.jpg)
+Note Page
+![alt Note Page](./readmefiles/NotePage.jpg)
+
+How to:
+![alt How to](./readmefiles/NOTES.png)
+
+
+Note Added
+![alt ote Added](./readmefiles/NoteAdded.jpg)
+
+
+
+    
+## Demo
 
 
 
 
-## Getting Started
+    
 
-On the back end, the application should include a `db.json` file that will be used to store and retrieve notes using the `fs` module.
+## Contributing
+source code:
+https://github.com/coding-boot-camp/miniature-eureka
 
-The following HTML routes should be created:
+    
+## Questions
+Contact me : 
 
-* `GET /notes` should return the `notes.html` file.
+Github: Sergrojas29
 
-* `GET *` should return the `index.html` file.
+Email: Sergrojas29@gmail.com
+    
 
-The following API routes should be created:
+## License
 
-* `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
-
-* `POST /api/notes` should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you).
-
-
-## Bonus
-
-You haven’t learned how to handle DELETE requests, but this application offers that functionality on the front end. As a bonus, try to add the DELETE route to the application using the following guideline:
-
-* `DELETE /api/notes/:id` should receive a query parameter that contains the id of a note to delete. To delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
-
-
-
-
-
+[MIT](https://choosealicense.com/licenses/mit/)
 
 
 
