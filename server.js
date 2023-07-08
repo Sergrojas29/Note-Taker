@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require('fs')
 const path = require('path')
 const app = express()
-let data = require('./db/db');
+// let data = require('./db/db');
 const { log } = require("console");
 const uuid = require('uuid')
 // import { v4 as uuidv4} from 'uuid';
@@ -26,10 +26,11 @@ app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'public/index.htm
 app.get('/notes', (req, res) => { res.sendFile(path.join(__dirname, 'public/notes.html')) })
 
 //Get db/db.json
-app.get('/api/notes', (req, res) => res.json(data));
+app.get('/api/notes', (req, res) => res.json(fileData()));
 
 //Get Original Notes and add new obejct to it
 function saveToNotefile(arrayObject) {
+    const data = fileData()
     data.push(...arrayObject)
     const newNoteFile = JSON.stringify(data)
     fs.writeFileSync('./db/db.json', newNoteFile)
@@ -72,6 +73,7 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     const { id } = req.params
     console.info(`${req.method} request received to add a note`)
+    let data = fileData()
     data = data.filter(e => {
         return e.id == id ? false : true
     })
@@ -81,7 +83,6 @@ app.delete('/api/notes/:id', (req, res) => {
 
     // res.status(201).send("Deleted successfully")
 })
-
 
 
 
