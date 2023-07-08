@@ -86,7 +86,7 @@ app.delete('/api/notes/:id', (req, res) => {
 
 
 
-app.listen(PORT, (err) => {
+app.listen(port, (err) => {
     err ? console.log(err) :
-        console.log(`Example app listening at http://localhost:${PORT}`)
+        console.log(`Example app listening at http://localhost:${port}`)
 })
