@@ -47,6 +47,10 @@ Note Added
 
 
 
+https://github.com/Sergrojas29/Note-Taker/assets/128770839/dcf1f9ef-8761-4315-ba32-96cc1d336d0a
+
+
+
 
     
 
