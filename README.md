@@ -46,13 +46,10 @@ Note Added
 ## Demo
 
 
-
-https://github.com/Sergrojas29/Note-Taker/assets/128770839/dcf1f9ef-8761-4315-ba32-96cc1d336d0a
-
+https://github.com/Sergrojas29/Note-Taker/assets/128770839/d134f93c-d4f6-4a4f-aa5a-64f11780973c
 
 
-
-    
+   
 
 ## Contributing
 source code:
